@@ -25,8 +25,6 @@ class View:
         self.txt_titolo = None
         self.txt_responsabile = None
 
-        # Non obbligatorio mettere già qui tutti gli elementi UI
-
     def show_alert(self, messaggio):
         self.alert.show_alert(messaggio)
 
@@ -62,8 +60,10 @@ class View:
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
         pulsante_conferma_responsabile = ft.Button("Conferma", on_click=self.controller.conferma_responsabile)
 
-        # Altri Pulsanti da implementare (es. "Mostra" e "Cerca")
-        # TODO
+        
+        # Creo i pulsanti "Mostra" e "Cerca" collegandoli ai rispettivi handler del Controller
+        pulsante_mostra_strumenti = ft.Button("Mostra", on_click=self.controller.handle_mostra_tutti)
+        pulsante_cerca_strumenti = ft.Button("Cerca", on_click=self.controller.handle_cerca_tipo)
 
         # --- LAYOUT ---
         self.page.add(
@@ -81,11 +81,20 @@ class View:
                    alignment=ft.MainAxisAlignment.CENTER),
             ft.Divider(),
 
-            # Sezione 3
-            # TODO
+            #SEZIONE 3: LISTA COMPLETA DEGLI STRUMENTI
+            ft.Text("Strumenti", size=20),
+            pulsante_mostra_strumenti,
+            self.lista_strumenti,
+            ft.Divider(),
 
-            # Sezione 4
-            # TODO
+            #SEZIONE 4: RICERCA STRUMENTO PER TIPO
+            ft.Text("Cerca Strumento per Tipo", size=20),
+            ft.Row(
+                spacing=20,
+                controls=[self.input_tipo_strumento, pulsante_cerca_strumenti],
+                alignment=ft.MainAxisAlignment.CENTER
+            ),
+            self.lista_strumenti_ricerca,
         )
 
     def cambia_tema(self, e):
